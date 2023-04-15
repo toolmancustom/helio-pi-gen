@@ -1,0 +1,14 @@
+[Unit]
+Description=Join Zerotier network
+ConditionPathExists=/boot/zerotier.conf
+Requires=zerotier-one.service
+After=network-online.target network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=/boot/zerotier.conf
+ExecStart="zerotier-cli join ${ZEROTIER_NETWORK_ID}"
+
+[Install]
+WantedBy=multi-user.target
